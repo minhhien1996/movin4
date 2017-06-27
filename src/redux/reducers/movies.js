@@ -1,4 +1,5 @@
 import axios from 'axios';
+import camelcaseKeys from 'camelcase-keys';
 
 // action type
 const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
@@ -21,7 +22,7 @@ const getMovieById = (movieId) => (dispatch) => {
   })
   .then(response => {
     console.log(response);
-    dispatch(receiveOne(response.data));
+    dispatch(receiveOne(camelcaseKeys(response.data)));
   })
   .catch(error => {
     console.log(error);
