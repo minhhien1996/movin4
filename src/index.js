@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './redux/reducers';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+import 'semantic-ui-css/semantic.min.css';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 

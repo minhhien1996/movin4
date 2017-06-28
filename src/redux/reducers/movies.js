@@ -15,6 +15,16 @@ const apiKey = 'cfe422613b250f702980a3bbf9e90716';
 const baseUrl = 'https://api.themoviedb.org/3';
 
 // async action creator
+const shouldGet = (state, movieId) => {
+  if (state.moviesReducer.loading || state.moviesReducer.detailedMovies[movieId]) return false;
+  return true;
+}
+
+
+const getMovieByIdIfNeeded = (movieId) => (dispatch, getState) => {
+  if (shouldGet(getState(), movieId)) return dispatch(getMovieById(movieId));
+}
+
 const getMovieById = (movieId) => (dispatch) => {
   dispatch(getOne(movieId));
   return axios({
@@ -22,8 +32,8 @@ const getMovieById = (movieId) => (dispatch) => {
     url: `${baseUrl}/movie/${movieId}?api_key=${apiKey}`
   })
   .then(response => {
-    console.log(response);
-    dispatch(receiveOne(camelcaseKeys(response.data)));
+    // console.log(response);
+    dispatch(receiveOne(movieId, camelcaseKeys(response.data)));
   })
   .catch(error => {
     console.log(error);
@@ -31,11 +41,16 @@ const getMovieById = (movieId) => (dispatch) => {
   });
 };
 
+const getYearMonthDate = (_date = Date.now()) => {
+  const date = new Date(_date);
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+}
+
 const getLastest = (page = 1) => (dispatch) => {
   dispatch(getList());
   return axios({
     method: 'get',
-    url: `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=release_date.desc`
+    url: `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=popularity.desc&release_date.lte=${getYearMonthDate()}`
   })
   .then(response => {
     console.log(response);
@@ -124,5 +139,5 @@ const moviesReducer = (state = initialState, action) => {
   }
 }
 
-export { getMovieById, getLastest };
+export { getMovieByIdIfNeeded, getLastest };
 export default moviesReducer;

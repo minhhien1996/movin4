@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import MovieList from '../../components/MovieList';
 import NavigationBar from '../../components/NavigationBar';
 import LastestView from '../LastestView/';
+import MovieDetailView from '../MovieDetailView/';
 import logo from './logo.svg';
 import './App.css';
 
@@ -10,7 +10,10 @@ class App extends Component {
     return (
       <div>
         <NavigationBar />
-        <LastestView />
+        {
+          // <MovieDetailView movieId="76341" />
+          <LastestView/>
+        }
       </div>
     );
   }
