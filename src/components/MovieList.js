@@ -8,7 +8,6 @@ export default class MovieList extends Component {
   state = { currentPage: 1, totalPage: 1 };
 
   handlePageNumbeClick = function (e, { number }) {
-    console.log(this);
     this.setState({ currentPage: number })
   }
 
@@ -22,7 +21,7 @@ export default class MovieList extends Component {
         <Grid container relaxed columns={4}>
           {movies.slice(begin, end).map((movie, idx) =>
             (<Grid.Column key={idx}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} movieId={movie.id} />
             </Grid.Column>)
           )}
         </Grid>

@@ -1,2 +1,6 @@
-import App from './App';
-export {App};
+import LastestView from './LastestView';
+import MovieDetailView from './MovieDetailView';
+export {
+  LastestView,
+  MovieDetailView
+};

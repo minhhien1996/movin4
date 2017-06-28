@@ -10,13 +10,13 @@ class Pagination extends Component {
       <Table basic='very'>
         <Table.Row>
           <Menu floated='right' pagination>
-            <Menu.Item as='a' icon>
+            <Menu.Item as='a' icon key="previous">
               <Icon name='left chevron' />
             </Menu.Item>
             {
-              Array.from({length: totalPage}, (v, i) => (i + 1)).map(pageNumber => (<Menu.Item as='a' number={pageNumber} onClick={handlePageNumbeClick}>{pageNumber}</Menu.Item>))
+              Array.from({length: totalPage}, (v, i) => (i + 1)).map(pageNumber => (<Menu.Item as='a' number={pageNumber} key={pageNumber} onClick={handlePageNumbeClick}>{pageNumber}</Menu.Item>))
             }
-            <Menu.Item as='a' icon>
+            <Menu.Item as='a' key="next" icon>
               <Icon name='right chevron' />
             </Menu.Item>
           </Menu>

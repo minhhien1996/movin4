@@ -7,13 +7,13 @@ import PropTypes from 'prop-types';
 
 class MovieDetailView extends Component {
   componentDidMount() {
-    // redux help us with the injection here
+    // redux help us with the dispatch injection here
+    // react-router help us with the params injection
     const { dispatch, movieId } = this.props;
     dispatch(getMovieByIdIfNeeded(movieId));
   }
   render() {
     const { loading, movie } = this.props;
-    console.log("MOVIE", movie)
     return (
       <Segment>
         {
@@ -28,20 +28,21 @@ class MovieDetailView extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const movieId = ownProps.match.params.movieId;
   return {
-    movie: state.moviesReducer.detailedMovies[ownProps.movieId],
+    movieId: ownProps.match.params.movieId,
+    movie: state.moviesReducer.detailedMovies[movieId],
     loading: state.moviesReducer.loading,
   }
 }
 
 MovieDetailView.defaultProps = {
-  movieId: "76341",
+  loading: true
 }
 
 MovieDetailView.propTypes = {
-  movie: PropTypes.object.isRequired,
+  movie: PropTypes.object,
   loading: PropTypes.bool.isRequired,
-  movieId: PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps)(MovieDetailView);

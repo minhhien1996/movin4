@@ -9,7 +9,6 @@ export default class MovieDetail extends Component {
   render() {
     const { movie } = this.props;
     const { title, overview, voteAverage, voteCount, backdropPath, posterPath, genres, originalLanguage, runtime, releaseDate, originalTitle } = movie;
-    console.log(movie)
     const rating = {
       voteAverage,
       voteScale: 10,
@@ -18,7 +17,7 @@ export default class MovieDetail extends Component {
     return (
       <Container>
         <Segment inverted>
-          <Grid column={2} divided>
+          <Grid divided>
             <Grid.Column key="title"  width={10}>
 
               <Header size='huge' inverted>{title}</Header>
@@ -35,7 +34,7 @@ export default class MovieDetail extends Component {
           </Grid>
         </Segment>
         <Divider />
-        <Grid column={2} divided>
+        <Grid divided>
           <Grid.Column key="poster"  width={6} verticalAlign="middle">
             <Image centered src={getImage(posterPath)} />
           </Grid.Column>

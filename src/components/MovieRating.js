@@ -14,9 +14,9 @@ export default class MovieRating extends Component {
           <strong><span>{voteAverage}</span></strong><span>/</span><span><small>{voteScale}</small></span>
         </div>
         <div>
-          <small>{voteCount}</small>
+          <small>{voteCount} votes</small>
         </div>
-        <Rating maxRating={5} rating={scaledRating} icon='star' size='small' disabled inverted/>
+        <Rating maxRating={5} rating={scaledRating} icon='star' size='small' disabled/>
       </Segment>
     );
   }

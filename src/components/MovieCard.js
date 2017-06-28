@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { push } from 'react-router-redux';
 
 const getImage = (path) => path ? `https://image.tmdb.org/t/p/w500/${path}` : '/default_poster.png';
 
 export default class MovieCard extends React.Component {
+
   render() {
-    const { posterPath, title, releaseDate, overview } = this.props.movie;
+    const { posterPath, title, releaseDate, overview, id } = this.props.movie;
     return (
-      <Card>
+      <Card href={`/detail/${id}`}>
         <Image src={getImage(posterPath)} />
         <Card.Content>
           <Card.Header>{title}</Card.Header>
