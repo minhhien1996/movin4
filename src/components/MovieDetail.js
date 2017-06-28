@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Header, Segment, Grid, Divider, Image } from 'semantic-ui-react';
+import { Container, Header, Segment, Grid, Divider, Image, Item } from 'semantic-ui-react';
+import formatMoney from 'accounting-js/lib/formatMoney.js'
 import MovieRating from './MovieRating';
 
 const getImage = (path) => path ? `https://image.tmdb.org/t/p/w500/${path}` : '/default_poster.png';
@@ -8,12 +9,28 @@ const getImage = (path) => path ? `https://image.tmdb.org/t/p/w500/${path}` : '/
 export default class MovieDetail extends Component {
   render() {
     const { movie } = this.props;
-    const { title, overview, voteAverage, voteCount, backdropPath, posterPath, genres, originalLanguage, runtime, releaseDate, originalTitle } = movie;
+    const { title, overview, voteAverage, voteCount, backdropPath, posterPath, genres, originalLanguage, runtime, releaseDate, originalTitle, revenue, productionCompanies, budget } = movie;
     const rating = {
       voteAverage,
       voteScale: 10,
       voteCount,
     }
+    const contents = [{
+      header: 'Original title',
+      data: originalTitle,
+    }, {
+      header: 'Revenue',
+      data: `${formatMoney(revenue)}`
+    }, {
+      header: 'Budget',
+      data: `${formatMoney(budget)}`
+    }, {
+      header: "Production Companies",
+      data: `${productionCompanies.map(company => company.name).join(', ')}`
+    }, {
+      header: 'Overview',
+      data: overview
+    }];
     return (
       <Container>
         <Segment inverted>
@@ -43,10 +60,17 @@ export default class MovieDetail extends Component {
           </Grid.Column>
         </Grid>
         <Divider />
-        <Header size="medium">Original Title</Header>
-        <p style={{fontSize: "18px"}}>{originalTitle}</p>
-        <Header size="medium">Overview</Header>
-        <p style={{fontSize: "18px"}}>{overview}</p>
+
+        <Item.Group>
+          {contents.map(item => (<Item>
+            <Item.Content>
+              <Item.Header as='h3'>{item.header}</Item.Header>
+              <Item.Description style={{ fontSize: '18px'}}>
+                {item.data !== 'undefined' ? item.data : 'unknown'}
+              </Item.Description>
+            </Item.Content>
+          </Item>))}
+        </Item.Group>
       </Container>
     );
   }
