@@ -33,7 +33,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 MovieDetailView.defaultProps = {
-  loading: true
+  loading: true,
 }
 
 MovieDetailView.propTypes = {

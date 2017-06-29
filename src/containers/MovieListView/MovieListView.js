@@ -8,7 +8,6 @@ class MovieListView extends Component {
   componentDidMount() {
     // redux help us with the injection here
     const { dispatch, type } = this.props;
-    console.log("PROPS", this.props);
     switch (type) {
       case 'genre':
         const { genreId } = this.props.match.params;
@@ -23,11 +22,13 @@ class MovieListView extends Component {
     }
   }
   render() {
-    const { loading, list } = this.props;
+    const { loading, list, type } = this.props;
     const { results } = list;
     return (
       <Container>
-        <Header size="huge">Lastest Movies</Header>
+        <Header size="huge">{
+          type
+        }</Header>
         {
           loading ? (<DimmerLoader/>) : (<MovieList movies={results}/>)
         }
