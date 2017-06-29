@@ -13,7 +13,7 @@ import thunk from 'redux-thunk';
 import reducers from './redux/reducers';
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
-import { NavigationBar, NotFound } from './components/';
+import { NavigationBar, NotFound, Footer } from './components/';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -39,11 +39,12 @@ render(
           <Route exact path="/" component={MovieListView}/>
           <Route path="/lastest" component={MovieListView}/>
           <Route path="/genres/:genreId" render={(props) => (<MovieListView {...props} type="genre" />)}/>
-          <Route path="/collection" component={MovieListView}/>
+          <Route path="/search" render={(props) => (<MovieListView {...props} type="search" />)}/>
           <Route path="/detail/:movieId" component={MovieDetailView}/>
           <Route component={NotFound}/>
         </Switch>
       </ConnectedRouter>
+      <Footer/>
     </div>
   </Provider>,
   document.getElementById('root')

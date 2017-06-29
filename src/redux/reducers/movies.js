@@ -1,6 +1,5 @@
 import axios from 'axios';
 import camelcaseKeys from '../../helpers/camelcase-keys';
-
 // action type
 const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
 const GET_MOVIES = 'GET_MOVIES';
@@ -55,7 +54,14 @@ const getLastest = (page = 1) => (dispatch) => {
   })
   .then(response => {
     const camelResult = camelcaseKeys(response.data, { deep: true });
-    dispatch(receiveList(camelResult));
+    const { totalPages, totalResults, page, results } = camelResult;
+    const pagination = {
+      type: 'lastest',
+      totalPages,
+      currentPage: page,
+      totalResults
+    }
+    dispatch(receiveList(results, pagination));
   })
   .catch(error => {
     console.log(error);
@@ -71,7 +77,39 @@ const getListByGenreId = (genreId, page = 1) => (dispatch) => {
   })
   .then(response => {
     const camelResult = camelcaseKeys(response.data, { deep: true });
-    dispatch(receiveList(camelResult));
+    const { totalPages, totalResults, page, results } = camelResult;
+    const pagination = {
+      type: 'genre',
+      genreId,
+      totalPages,
+      currentPage: page,
+      totalResults
+    }
+    dispatch(receiveList(results, pagination));
+  })
+  .catch(error => {
+    console.log(error);
+    dispatch(getListFailed(error));
+  });
+}
+
+const searchMovie = (keyword, page = 1) => (dispatch) => {
+  dispatch(getList());
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/search/movie?api_key=${apiKey}&query=${keyword}&page=${page}&sort_by=popularity.desc&release_date.lte=${getYearMonthDate()}`
+  })
+  .then(response => {
+    const camelResult = camelcaseKeys(response.data, { deep: true });
+    const { totalPages, totalResults, page, results } = camelResult;
+    const pagination = {
+      type: 'search',
+      keyword,
+      totalPages,
+      currentPage: page,
+      totalResults
+    }
+    dispatch(receiveList(results, pagination));
   })
   .catch(error => {
     console.log(error);
@@ -96,9 +134,10 @@ const receiveOne = (movieId, movie) => ({
   movie
 });
 
-const receiveList = (list) => ({
+const receiveList = (list, pagination) => ({
   type: GET_MOVIES_SUCCESS,
-  list
+  list,
+  pagination
 });
 
 const getOneFailed = (movieId, error) => ({
@@ -113,10 +152,11 @@ const getListFailed = (error) => ({
 });
 
 const initialState = {
-  list: {},
+  list: [],
   detailedMovies: {},
   loading: false,
-  error: null
+  error: null,
+  pagination: {}
 }
 
 const moviesReducer = (state = initialState, action) => {
@@ -146,6 +186,7 @@ const moviesReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       list: action.list,
+      pagination: action.pagination
     }
     default:
     return state;
@@ -153,5 +194,5 @@ const moviesReducer = (state = initialState, action) => {
   }
 }
 
-export { getMovieByIdIfNeeded, getLastest, getListByGenreId };
+export { getMovieByIdIfNeeded, getLastest, getListByGenreId, searchMovie };
 export default moviesReducer;

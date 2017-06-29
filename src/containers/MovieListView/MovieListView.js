@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DimmerLoader, MovieList } from '../../components/';
-import { getLastest, getListByGenreId } from  '../../redux/reducers/movies';
+import { getLastest, getListByGenreId, searchMovie } from  '../../redux/reducers/movies';
 import { Container, Header } from 'semantic-ui-react';
+import queryString from 'query-string';
 
 class MovieListView extends Component {
   componentDidMount() {
     // redux help us with the injection here
-    const { dispatch, type } = this.props;
+    const { dispatch, type, location } = this.props;
+    const searchQueryString  = location ? this.props.location.search : '';
+    const searchQueryObject = queryString.parse(searchQueryString);
+    const { page } = searchQueryObject;
     switch (type) {
       case 'genre':
         const { genreId } = this.props.match.params;
-        dispatch(getListByGenreId(genreId));
+        dispatch(getListByGenreId(genreId, page));
         break;
       case 'lastest':
-        dispatch(getLastest());
+        dispatch(getLastest(page));
+        break;
+      case 'search':
+        const { query } = searchQueryObject
+        dispatch(searchMovie(query, page));
         break;
       default:
         dispatch(getLastest());
@@ -22,15 +30,14 @@ class MovieListView extends Component {
     }
   }
   render() {
-    const { loading, list, type } = this.props;
-    const { results } = list;
+    const { loading, list, type, pagination } = this.props;
     return (
       <Container>
         <Header size="huge">{
           type
         }</Header>
         {
-          loading ? (<DimmerLoader/>) : (<MovieList movies={results}/>)
+          loading ? (<DimmerLoader/>) : (<MovieList movies={list} pagination={pagination}/>)
         }
       </Container>
 
@@ -41,6 +48,7 @@ class MovieListView extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+    pagination: state.moviesReducer.pagination,
     list: state.moviesReducer.list,
     loading: state.moviesReducer.loading,
     type: ownProps.type || 'lastest', // default props

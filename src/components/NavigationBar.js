@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Input, Dropdown } from 'semantic-ui-react';
+import { Menu, Input, Dropdown, Icon, Button } from 'semantic-ui-react';
 
 // genres will stay unchanged, so hardcode it here instead of fetching the same data all the times
 const genres = [
@@ -82,11 +82,11 @@ const genres = [
   ];
 
 export default class NavigationBar extends Component {
-  state = { activeItem: 'lastest' };
+  state = { activeItem: 'lastest', query:'' };
 
   handleItemClick = (name) => () => this.setState({ activeItem: name });
 
-  handleSearchIconClick = (e, target) => alert(target);
+  handleOnSearchInputChange = (event, { value }) => this.setState({ query: value });
 
   isActiveItem = (item) => this.state.activeItem === item;
 
@@ -101,10 +101,12 @@ export default class NavigationBar extends Component {
             {genres.map(genre => (<Dropdown.Item key={genre.id} href={`/genres/${genre.id}`}>{genre.name}</Dropdown.Item>))}
           </Dropdown.Menu>
         </Dropdown>
-        <Menu.Item name='collection' key='collection' active={this.isActiveItem('collection')} onClick={this.handleItemClick('collection')} href='/collection'/>
         <Menu.Menu position='right'>
           <Menu.Item>
-            <Input icon='search' placeholder='Search...' onClick={this.handleSearchIconClick}/>
+            <Input type='text' placeholder='Search...' action onChange={this.handleOnSearchInputChange}>
+              <input />
+              <Button type='submit' href={`/search?query=${this.state.query}`}>Search</Button>
+            </Input>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

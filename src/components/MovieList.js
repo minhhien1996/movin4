@@ -5,27 +5,19 @@ import MovieCard from './MovieCard';
 import Pagination from './Pagination';
 
 export default class MovieList extends Component {
-  state = { currentPage: 1, totalPage: 1 };
-
-  handlePageNumbeClick = function (e, { number }) {
-    this.setState({ currentPage: number })
-  }
 
   render() {
-    const { currentPage } = this.state;
-    const { perPage, movies } = this.props;
-    const begin = (currentPage - 1) * perPage;
-    const end = Math.min(begin + perPage, movies.length);
+    const { perPage, movies, pagination } = this.props;
     return (
       <Segment>
         <Grid container relaxed columns={4}>
-          {movies.slice(begin, end).map((movie, idx) =>
+          {movies.map((movie, idx) =>
             (<Grid.Column key={idx}>
               <MovieCard movie={movie} movieId={movie.id} />
             </Grid.Column>)
           )}
         </Grid>
-        <Pagination handlePageNumbeClick={this.handlePageNumbeClick.bind(this)}/>
+        <Pagination pagination={pagination} handlePageNumbeClick={() => console.log('ahihi')}/>
       </Segment>
     );
   }

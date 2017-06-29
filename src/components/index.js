@@ -4,6 +4,7 @@ import MovieList from './MovieList';
 import NavigationBar from './NavigationBar';
 import MovieDetail from './MovieDetail';
 import NotFound from './NotFound';
+import Footer from './Footer';
 
 export {
   DimmerLoader,
@@ -12,4 +13,5 @@ export {
   NavigationBar,
   MovieDetail,
   NotFound,
+  Footer,
 }

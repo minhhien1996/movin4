@@ -6,6 +6,7 @@
     "accounting-js": "^1.1.1",
     "axios": "^0.16.2",
     "history": "^4.6.3",
+    "query-string": "^4.3.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
