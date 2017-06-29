@@ -5,7 +5,7 @@ import { LastestView, MovieDetailView } from './containers';
 import createHistory from 'history/createBrowserHistory'
 import { Route } from 'react-router'
 
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';

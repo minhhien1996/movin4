@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Table, Menu, Icon, Segment, } from 'semantic-ui-react';
+import { Grid, Segment, } from 'semantic-ui-react';
 import MovieCard from './MovieCard';
 import Pagination from './Pagination';
 
@@ -12,7 +12,7 @@ export default class MovieList extends Component {
   }
 
   render() {
-    const { currentPage, totalPage } = this.state;
+    const { currentPage } = this.state;
     const { perPage, movies } = this.props;
     const begin = (currentPage - 1) * perPage;
     const end = Math.min(begin + perPage, movies.length);

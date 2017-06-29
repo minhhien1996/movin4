@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Icon, Image } from 'semantic-ui-react'
-import { push } from 'react-router-redux';
+import { Card, Image } from 'semantic-ui-react';
 
 const getImage = (path) => path ? `https://image.tmdb.org/t/p/w500/${path}` : '/default_poster.png';
 

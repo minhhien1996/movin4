@@ -1,11 +1,11 @@
 {
   "name": "movin4",
+  "homepage": "https://minhhien1996.github.io/movin4",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "accounting-js": "^1.1.1",
     "axios": "^0.16.2",
-    "camelcase-keys": "^4.1.0",
     "history": "^4.6.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -18,12 +18,15 @@
     "semantic-ui-react": "^0.70.0"
   },
   "devDependencies": {
+    "gh-pages": "^1.0.0",
     "react-scripts": "1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }

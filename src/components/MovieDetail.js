@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Header, Segment, Grid, Divider, Image, Item } from 'semantic-ui-react';
-import formatMoney from 'accounting-js/lib/formatMoney.js'
+import { formatMoney } from 'accounting-js/dist/accounting.es6.js'
 import MovieRating from './MovieRating';
 
 const getImage = (path) => path ? `https://image.tmdb.org/t/p/w500/${path}` : '/default_poster.png';
@@ -25,7 +25,7 @@ export default class MovieDetail extends Component {
       header: 'Budget',
       data: `${formatMoney(budget)}`
     }, {
-      header: "Production Companies",
+      header: 'Production Companies',
       data: `${productionCompanies.map(company => company.name).join(', ')}`
     }, {
       header: 'Overview',
@@ -62,7 +62,7 @@ export default class MovieDetail extends Component {
         <Divider />
 
         <Item.Group>
-          {contents.map(item => (<Item>
+          {contents.map(item => (<Item key={item.header}>
             <Item.Content>
               <Item.Header as='h3'>{item.header}</Item.Header>
               <Item.Description style={{ fontSize: '18px'}}>

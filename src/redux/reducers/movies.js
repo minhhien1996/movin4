@@ -1,5 +1,5 @@
 import axios from 'axios';
-import camelcaseKeys from 'camelcase-keys';
+import camelcaseKeys from '../../helpers/camelcase-keys';
 
 // action type
 const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
@@ -33,7 +33,8 @@ const getMovieById = (movieId) => (dispatch) => {
   })
   .then(response => {
     // console.log(response);
-    dispatch(receiveOne(movieId, camelcaseKeys(response.data)));
+    const camelResult = camelcaseKeys(response.data, { deep: true });
+    dispatch(receiveOne(movieId, camelResult));
   })
   .catch(error => {
     console.log(error);
@@ -53,11 +54,8 @@ const getLastest = (page = 1) => (dispatch) => {
     url: `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=popularity.desc&release_date.lte=${getYearMonthDate()}`
   })
   .then(response => {
-    console.log(response);
-    dispatch(receiveList(camelcaseKeys({
-      ...response.data,
-      results: response.data.results.map(element => camelcaseKeys(element))
-    })));
+    const camelResult = camelcaseKeys(response.data, { deep: true });
+    dispatch(receiveList(camelResult));
   })
   .catch(error => {
     console.log(error);
