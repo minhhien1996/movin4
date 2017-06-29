@@ -1,6 +1,6 @@
-import LastestView from './LastestView';
+import MovieListView from './MovieListView';
 import MovieDetailView from './MovieDetailView';
 export {
-  LastestView,
+  MovieListView,
   MovieDetailView
 };

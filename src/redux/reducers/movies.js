@@ -63,6 +63,22 @@ const getLastest = (page = 1) => (dispatch) => {
   });
 }
 
+const getListByGenreId = (genreId, page = 1) => (dispatch) => {
+  dispatch(getList());
+  return axios({
+    method: 'get',
+    url: `${baseUrl}/genre/${genreId}/movies?api_key=${apiKey}&page=${page}&sort_by=popularity.desc&release_date.lte=${getYearMonthDate()}`
+  })
+  .then(response => {
+    const camelResult = camelcaseKeys(response.data, { deep: true });
+    dispatch(receiveList(camelResult));
+  })
+  .catch(error => {
+    console.log(error);
+    dispatch(getListFailed(error));
+  });
+}
+
 // action creator
 
 const getOne = (movieId) => ({
@@ -137,5 +153,5 @@ const moviesReducer = (state = initialState, action) => {
   }
 }
 
-export { getMovieByIdIfNeeded, getLastest };
+export { getMovieByIdIfNeeded, getLastest, getListByGenreId };
 export default moviesReducer;

@@ -12,9 +12,9 @@ export default class MovieCard extends React.Component {
       <Card href={`/detail/${id}`}>
         <Image src={getImage(posterPath)} />
         <Card.Content>
-          <Card.Header>{title}</Card.Header>
+          <Card.Header>{title.length > 23 ? `${title.substring(0, 23)} ...` : title}</Card.Header>
           <Card.Meta>Released at {releaseDate}</Card.Meta>
-          <Card.Description>{overview.substring(0, 50)}...</Card.Description>
+          <Card.Description>{overview.substring(0, 50)} ...</Card.Description>
         </Card.Content>
       </Card>
     );

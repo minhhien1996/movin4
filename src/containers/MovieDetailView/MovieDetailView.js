@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DimmerLoader, MovieDetail } from '../../components/';
 import { getMovieByIdIfNeeded } from  '../../redux/reducers/movies';
-import { Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 class MovieDetailView extends Component {
@@ -15,16 +14,13 @@ class MovieDetailView extends Component {
   render() {
     const { loading, movie } = this.props;
     return (
-      <Segment>
+      <div>
         {
-          loading ? (<DimmerLoader/>) : (movie && <MovieDetail movie={movie}/>)
+          (loading || !(movie)) ? (<DimmerLoader/>) : (<MovieDetail movie={movie}/>)
         }
-      </Segment>
-
-
+      </div>
     );
   }
-
 }
 
 const mapStateToProps = (state, ownProps) => {

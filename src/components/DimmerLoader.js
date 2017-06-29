@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
-class DimmerLoader extends Component {
+export default class DimmerLoader extends Component {
   render() {
     return (
       <Dimmer active>
@@ -10,7 +9,4 @@ class DimmerLoader extends Component {
       </Dimmer>
     );
   }
-
 }
-
-export default DimmerLoader;

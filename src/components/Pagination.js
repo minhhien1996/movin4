@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class Pagination extends Component {
 
   render() {
-    const { currentPage, totalPage, handlePageNumbeClick } = this.props;
+    const { /*currentPage, */totalPage, handlePageNumbeClick } = this.props;
     return (
       <Table basic='very'>
         <Table.Row>

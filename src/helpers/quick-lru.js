@@ -1,5 +1,3 @@
-'use strict';
-
 class QuickLRU {
 	constructor(opts) {
 		opts = Object.assign({}, opts);

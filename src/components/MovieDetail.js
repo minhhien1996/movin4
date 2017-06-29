@@ -39,8 +39,8 @@ export default class MovieDetail extends Component {
 
               <Header size='huge' inverted>{title}</Header>
               <div>
-                <p><strong>{originalLanguage.toUpperCase()}</strong> | {runtime} min | {genres.map(genre => genre.name).join(" , ")}</p>
-                <p>Release Date: {releaseDate}</p>
+                <p style={{fontSize: '18px'}}><strong>{originalLanguage.toUpperCase()}</strong> | {runtime} min | {genres.map(genre => genre.name).join(" , ")}</p>
+                <p style={{fontSize: '18px'}}>Release Date: {releaseDate}</p>
               </div>
 
 
@@ -74,4 +74,24 @@ export default class MovieDetail extends Component {
       </Container>
     );
   }
+}
+
+
+MovieDetail.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string,
+    overview: PropTypes.string,
+    voteAverage: PropTypes.number,
+    voteCount: PropTypes.number,
+    backdropPath: PropTypes.string,
+    posterPath: PropTypes.string,
+    genres: PropTypes.array,
+    originalLanguage: PropTypes.string,
+    runtime: PropTypes.number,
+    releaseDate: PropTypes.string,
+    originalTitle: PropTypes.string,
+    revenue: PropTypes.number,
+    productionCompanies: PropTypes.array,
+    budget: PropTypes.number,
+  })
 }

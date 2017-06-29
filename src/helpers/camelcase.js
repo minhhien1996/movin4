@@ -1,5 +1,3 @@
-'use strict';
-
 function preserveCamelCase(str) {
 	let isLastCharLower = false;
 	let isLastCharUpper = false;

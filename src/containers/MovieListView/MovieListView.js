@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DimmerLoader, MovieList } from '../../components/';
-import { getLastest } from  '../../redux/reducers/movies';
+import { getLastest, getListByGenreId } from  '../../redux/reducers/movies';
 import { Container, Header } from 'semantic-ui-react';
 
-class LastestView extends Component {
+class MovieListView extends Component {
   componentDidMount() {
     // redux help us with the injection here
-    const { dispatch } = this.props;
-    dispatch(getLastest());
+    const { dispatch, type } = this.props;
+    console.log("PROPS", this.props);
+    switch (type) {
+      case 'genre':
+        const { genreId } = this.props.match.params;
+        dispatch(getListByGenreId(genreId));
+        break;
+      case 'lastest':
+        dispatch(getLastest());
+        break;
+      default:
+        dispatch(getLastest());
+        break;
+    }
   }
   render() {
     const { loading, list } = this.props;
@@ -30,6 +42,7 @@ class LastestView extends Component {
 const mapStateToProps = (state, ownProps) => ({
     list: state.moviesReducer.list,
     loading: state.moviesReducer.loading,
+    type: ownProps.type || 'lastest', // default props
 })
 
-export default connect(mapStateToProps)(LastestView);
+export default connect(mapStateToProps)(MovieListView);

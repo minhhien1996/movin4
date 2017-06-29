@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { LastestView, MovieDetailView } from './containers';
+import { MovieListView, MovieDetailView } from './containers';
 
 import createHistory from 'history/createBrowserHistory'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 
@@ -13,7 +13,7 @@ import thunk from 'redux-thunk';
 import reducers from './redux/reducers';
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
-import NavigationBar from './components/NavigationBar';
+import { NavigationBar, NotFound } from './components/';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -35,11 +35,14 @@ render(
     <div>
       <NavigationBar />
       <ConnectedRouter history={history}>
-        <div>
-          <Route exact path="/" component={LastestView}/>
-          <Route path="/lastest" component={LastestView}/>
+        <Switch>
+          <Route exact path="/" component={MovieListView}/>
+          <Route path="/lastest" component={MovieListView}/>
+          <Route path="/genres/:genreId" render={(props) => (<MovieListView {...props} type="genre" />)}/>
+          <Route path="/collection" component={MovieListView}/>
           <Route path="/detail/:movieId" component={MovieDetailView}/>
-        </div>
+          <Route component={NotFound}/>
+        </Switch>
       </ConnectedRouter>
     </div>
   </Provider>,
