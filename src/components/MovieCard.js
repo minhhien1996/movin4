@@ -12,9 +12,9 @@ export default class MovieCard extends React.Component {
       <Card href={`/detail/${id}`}>
         <Image src={getImage(posterPath)} />
         <Card.Content>
-          <Card.Header>{title.length > 23 ? `${title.substring(0, 23)} ...` : title}</Card.Header>
+          <Card.Header>{title}</Card.Header>
           <Card.Meta>Released at {releaseDate}</Card.Meta>
-          <Card.Description>{overview.substring(0, 50)} ...</Card.Description>
+          {<Card.Description>{overview.substring(0, overview.indexOf('.'))}.</Card.Description>}
         </Card.Content>
       </Card>
     );
@@ -26,7 +26,7 @@ MovieCard.propTypes = {
     title: PropTypes.string.isRequired,
     releaseDate: PropTypes.string.isRequired,
     posterPath: PropTypes.string.isRequired,
-    overview: PropTypes.string.isRequired,
+    // overview: PropTypes.string.isRequired,
   }).isRequired,
 };
 
@@ -35,7 +35,7 @@ MovieCard.defaultProps = {
     title: "Mad Max: Fury Road",
     releaseDate: "2015-05-13",
     posterPath: "/kqjL17yufvn9OVLyXYpvtyrFfak.jpg",
-    overview: "Mad Max: Fury Road",
+    // overview: "Mad Max: Fury Road",
     genres: [],
   }
 };
