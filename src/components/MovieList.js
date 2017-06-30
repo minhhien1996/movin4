@@ -10,12 +10,23 @@ export default class MovieList extends Component {
     const { perPage, movies, pagination } = this.props;
     return (
       <Segment>
-        <Grid container relaxed columns={4}>
+        <Grid container relaxed columns={4} >
+        <Grid.Row only='computer'>
           {movies.map((movie, idx) =>
             (<Grid.Column key={idx}>
               <MovieCard movie={movie} movieId={movie.id} />
             </Grid.Column>)
           )}
+          </Grid.Row>
+        </Grid>
+        <Grid container columns={1}>
+        <Grid.Row only='mobile'>
+          {movies.map((movie, idx) =>
+            (<Grid.Column key={idx}>
+              <MovieCard movie={movie} movieId={movie.id} />
+            </Grid.Column>)
+          )}
+          </Grid.Row>
         </Grid>
         <Pagination pagination={pagination} handlePageNumbeClick={() => console.log('ahihi')}/>
       </Segment>
