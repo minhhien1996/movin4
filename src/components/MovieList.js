@@ -13,19 +13,17 @@ export default class MovieList extends Component {
         <Grid container relaxed columns={3} >
 
           {movies.map((movie, idx) =>
-            (<Grid.Column key={idx} stretched>
+            (<Grid.Column key={idx} stretched only='computer'>
               <MovieCard movie={movie} movieId={movie.id} />
             </Grid.Column>)
           )}
         </Grid>
-        <Grid container columns={1}>
-        <Grid.Row only='mobile'>
+        <Grid container>
           {movies.map((movie, idx) =>
-            (<Grid.Column key={idx}>
+            (<Grid.Row only='mobile' stretched key={idx}>
               <MovieCard movie={movie} movieId={movie.id} />
-            </Grid.Column>)
+            </Grid.Row>)
           )}
-          </Grid.Row>
         </Grid>
         <Pagination pagination={pagination} handlePageNumbeClick={() => console.log('ahihi')}/>
       </Segment>

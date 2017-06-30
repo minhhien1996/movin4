@@ -82,7 +82,7 @@ const genres = [
   ];
 
 export default class NavigationBar extends Component {
-  state = { activeItem: 'lastest', query:'' };
+  state = { activeItem: '', query:'' };
 
   handleItemClick = (name) => () => this.setState({ activeItem: name });
 
@@ -101,14 +101,12 @@ export default class NavigationBar extends Component {
             {genres.map(genre => (<Dropdown.Item key={genre.id} href={`/genres/${genre.id}`}>{genre.name}</Dropdown.Item>))}
           </Dropdown.Menu>
         </Dropdown>
-        <Menu.Menu position='right'>
-          <Menu.Item>
-            <Input type='text' placeholder='Search...' action onChange={this.handleOnSearchInputChange}>
-              <input />
-              <Button type='submit' href={`/search?query=${this.state.query}`}>Search</Button>
-            </Input>
-          </Menu.Item>
-        </Menu.Menu>
+        <Menu.Item position='right'>
+          <Input type='text' placeholder='Search...' action onChange={this.handleOnSearchInputChange}>
+            <input />
+            <Button type='submit' href={`/search?query=${this.state.query}`} icon='search'/>
+          </Input>
+        </Menu.Item>
       </Menu>
     );
   };

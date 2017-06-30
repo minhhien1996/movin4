@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Menu, Icon, } from 'semantic-ui-react';
+import { Table, Menu, Icon, Segment, } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+
+const MAX_PAGES = 3;
 
 const makeBaseUrl = (pagination) => {
   switch (pagination.type) {
@@ -15,40 +17,41 @@ const makeBaseUrl = (pagination) => {
   }
 }
 
+const numberToCountArray = (length, start = 0) => Array.from({ length }, (v, i) => (i + start));
+
 class Pagination extends Component {
 
   render() {
     const { pagination, handlePageNumbeClick } = this.props;
     const { totalPages, currentPage } = pagination;
-    const maxPages = Math.min(totalPages, 10);
+    const maxPages = Math.min(totalPages, MAX_PAGES);
     const baseUrl = makeBaseUrl(pagination)
     console.log('pagination', pagination)
     return (
-      <Table basic='very'>
-        <Table.Row>
-          <Menu floated='right' pagination>
-            {
-              // <Menu.Item as='a' icon key="previous">
-              //   <Icon name='left chevron' />
-              // </Menu.Item>
-            }
-            {
-              Array.from({length: maxPages}, (v, i) => (i + 1)).map(pageNumber => (
-                <Menu.Item as='a'
-                  active={pageNumber === currentPage}
-                  number={pageNumber} key={pageNumber}
-                  href={`${baseUrl}page=${pageNumber}`}>{pageNumber}</Menu.Item>)
-              )
-            }
-            {
-              // <Menu.Item as='a' key="next" icon>
-              //   <Icon name='right chevron' />
-              // </Menu.Item>
-            }
+      <Segment compact style={{ margin: '20 auto'}} size='tiny'>
+      <Menu tabular  pagination>
+        <Menu.Item as='a' key="first" icon
+          key={1}
+          href={`${baseUrl}page=${1}`}>
+          <Icon name='angle double left' />
+        </Menu.Item>
+        {
+          numberToCountArray(MAX_PAGES, currentPage).map(pageNumber => (
+            <Menu.Item as='a'
+              active={pageNumber === currentPage}
+              key={pageNumber}
+              href={`${baseUrl}page=${pageNumber}`}>{pageNumber}</Menu.Item>)
+          )
+        }
+        <Menu.Item disabled>...</Menu.Item>
+        <Menu.Item as='a' key="last" icon
+          key={totalPages}
+          href={`${baseUrl}page=${totalPages}`}>
+          <Icon name='angle double right' />
+        </Menu.Item>
 
-          </Menu>
-        </Table.Row>
-      </Table>
+      </Menu>
+      </Segment>
     );
   }
 }
